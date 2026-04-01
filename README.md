@@ -79,3 +79,66 @@ prova1web3/
 ├── database.sql
 ├── prova1web3.postman_collection
 └── README.md
+```
+
+---
+
+## Instruções para inicializar os serviços
+
+Cada microsserviço deve ser executado separadamente em um terminal.
+
+### 1. product-service
+
+```bash
+cd product-service
+mvn spring-boot:run
+```
+
+### 2. user-service
+
+```bash
+cd inventory-service
+mvn spring-boot:run
+```
+
+### 3. inventory-service
+
+```bash
+cd user-service
+mvn spring-boot:run
+```
+
+### 4. payment-service
+
+```bash
+cd payment-service
+mvn spring-boot:run
+```
+### 5. order-service
+
+```bash
+cd order-service
+mvn spring-boot:run
+```
+
+### 6. Bancos de Dados
+
+Criar cada banco de dados dedicado para cada serviço.
+
+```bash
+CREATE DATABASE product_db;
+CREATE DATABASE inventory_db;
+CREATE DATABASE user_db;
+CREATE DATABASE payment_db;
+CREATE DATABASE order_db;
+```
+
+## Portas utilizadas
+
+| Serviço           | Porta |
+| ----------------- | ----- |
+| product-service   | 8081  |
+| inventory-service | 8082  |
+| user-service      | 8083  |
+| payment-service   | 8084  |
+| order-service     | 8085  |
