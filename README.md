@@ -215,3 +215,17 @@ status = APPROVED
 GET http://localhost:8082/inventory/1
 Resultado esperado:
 quantidade = 8
+
+---
+
+#### Observação
+Alterar o usuário e senha nos arquivos `application.properties` dos serviços:
+```properties
+spring.application.name=inventory
+server.port=8082
+spring.datasource.url=jdbc:mysql://localhost:3306/inventory_db
+spring.datasource.username=USUARIO_DB
+spring.datasource.password=SENHA_DB
+spring.jpa.hibernate.ddl-auto=update
+```
+
