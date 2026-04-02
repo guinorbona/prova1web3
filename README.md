@@ -125,7 +125,7 @@ mvn spring-boot:run
 
 Criar cada banco de dados dedicado para cada serviço.
 
-```bash
+```sql
 CREATE DATABASE product_db;
 CREATE DATABASE inventory_db;
 CREATE DATABASE user_db;
@@ -142,3 +142,76 @@ CREATE DATABASE order_db;
 | user-service      | 8083  |
 | payment-service   | 8084  |
 | order-service     | 8085  |
+
+## Evidência obrigatória de funcionamento
+
+### 1. Criar produto
+
+POST http://localhost:8081/products
+```json
+{
+  "name": "Notebook Dell",
+  "description": "16GB RAM, SSD 512GB",
+  "price": 4500.00
+}
+```
+### 2. Criar usuário
+
+POST http://localhost:8083/users
+```json
+{
+  "name": "Guilherme Marques",
+  "email": "guilherme@email.com"
+}
+```
+
+### 3. Criar estoque
+
+POST http://localhost:8082/inventory
+```json
+{
+  "productId": 1,
+  "quantity": 10
+}
+```
+
+### 4. Verificar estoque antes do pedido
+
+GET http://localhost:8082/inventory/1
+Resultado esperado:
+quantidade = 10
+
+### 5. Criar pedido
+
+POST http://localhost:8085/orders
+```json
+{
+  "userId": 1,
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    }
+  ]
+}
+```
+### 6. Processamento de pagamento
+
+O pagamento é processado automaticamente pelo payment-service durante a criação do pedido.
+Regra implementada:
+* até 10000 → APPROVED
+* acima de 10000 → REJECTED
+Neste exemplo:
+* total = 9000 → pagamento aprovado
+
+### 7. Confirmar pedido
+
+GET http://localhost:8085/orders/1
+Resultado esperado:
+status = APPROVED
+
+### 8. Verificar estoque após pedido
+
+GET http://localhost:8082/inventory/1
+Resultado esperado:
+quantidade = 8
